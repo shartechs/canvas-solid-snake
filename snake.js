@@ -10,6 +10,7 @@ let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 let velocityX = 0;
 let velocityY = 0;
+let snakeBody = [];
 
 //food
 let foodX;
@@ -58,18 +59,32 @@ const changeDirection = (e) => {
 const update = () => {
   context.fillStyle = "black";
   context.fillRect(0, 0, board.width, board.height);
-  if (snakeX === foodX && snakeY === foodY) {
-    placeFood();
-  }
 
   context.fillStyle = "red";
   context.fillRect(foodX, foodY, blockSize, blockSize);
+
+  if (snakeX === foodX && snakeY === foodY) {
+    snakeBody.push([foodX, foodY]);
+    placeFood();
+  }
+
+  for (let i = snakeBody.length - 1; i > 0; i--) {
+    snakeBody[i] = snakeBody[i - 1];
+  }
+
+  if (snakeBody.length > 0) {
+    snakeBody[0] = [snakeX, snakeY];
+  }
 
   context.fillStyle = "lime";
   snakeX += velocityX * blockSize;
   snakeY += velocityY * blockSize;
 
   context.fillRect(snakeX, snakeY, blockSize, blockSize);
+
+  for (let i = 0; i < snakeBody.length; i++) {
+    context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  }
 };
 
 const placeFood = () => {
