@@ -20,27 +20,37 @@ window.onload = () => {
   board.height = rows * blockSize;
 
   placeFood();
-  document.addEventListener("keyup", changeDirection);
+
+  document.addEventListener("keydown", changeDirection);
   setInterval(update, 1000 / 10);
 };
 
 const changeDirection = (e) => {
   switch (e.code) {
     case "ArrowUp":
-      velocityX = 0;
-      velocityY = -1;
+      if (velocityY !== 1) {
+        velocityX = 0;
+        velocityY = -1;
+      }
       break;
     case "ArrowDown":
-      velocityX = 0;
-      velocityY = 1;
+      if (velocityY !== -1) {
+        velocityX = 0;
+        velocityY = 1;
+      }
+
       break;
     case "ArrowRight":
-      velocityX = 1;
-      velocityY = 0;
+      if (velocityX !== -1) {
+        velocityX = 1;
+        velocityY = 0;
+      }
       break;
     case "ArrowLeft":
-      velocityX = -1;
-      velocityY = 0;
+      if (velocityX !== 1) {
+        velocityX = -1;
+        velocityY = 0;
+      }
       break;
   }
 };
@@ -48,15 +58,18 @@ const changeDirection = (e) => {
 const update = () => {
   context.fillStyle = "black";
   context.fillRect(0, 0, board.width, board.height);
+  if (snakeX === foodX && snakeY === foodY) {
+    placeFood();
+  }
+
+  context.fillStyle = "red";
+  context.fillRect(foodX, foodY, blockSize, blockSize);
 
   context.fillStyle = "lime";
   snakeX += velocityX * blockSize;
   snakeY += velocityY * blockSize;
-  console.log(velocityX, velocityY);
-  context.fillRect(snakeX, snakeY, blockSize, blockSize);
 
-  context.fillStyle = "red";
-  context.fillRect(foodX, foodY, blockSize, blockSize);
+  context.fillRect(snakeX, snakeY, blockSize, blockSize);
 };
 
 const placeFood = () => {
