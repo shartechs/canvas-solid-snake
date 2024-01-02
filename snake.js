@@ -102,6 +102,12 @@ const update = () => {
   }
 
   //game over condition #2 - snake collides with its body
+  for (let i = 0; i < snakeBody.length; i++) {
+    if (snakeX === snakeBody[i][0] || snakeY === snakeBody[i][1]) {
+      gameOver = true;
+      alert("Game over!");
+    }
+  }
 };
 
 const placeFood = () => {
