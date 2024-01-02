@@ -16,7 +16,11 @@ let snakeBody = [];
 let foodX;
 let foodY;
 
+//Gameover
+let gameOver = false;
+
 window.onload = () => {
+  if (!gameOver) return;
   board.width = cols * blockSize;
   board.height = rows * blockSize;
 
@@ -84,6 +88,17 @@ const update = () => {
 
   for (let i = 0; i < snakeBody.length; i++) {
     context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  }
+
+  //gameover condition #1 - snake collides with the board edges
+  if (
+    snakeX < 0 ||
+    snakeX > cols * blockSize ||
+    snakeY < 0 ||
+    snakeY > rows * blockSize
+  ) {
+    gameOver = true;
+    alert("Game over!");
   }
 };
 
