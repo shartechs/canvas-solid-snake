@@ -19,6 +19,11 @@ let foodY;
 //Gameover
 let gameOver = false;
 
+//audio
+
+const collectSound = new Audio("./audio/collect.mp3");
+const deathSound = new Audio("./audio/death.mp3");
+
 window.onload = () => {
   board.width = cols * blockSize;
   board.height = rows * blockSize;
@@ -68,6 +73,7 @@ const update = () => {
   context.fillRect(foodX, foodY, blockSize, blockSize);
 
   if (snakeX === foodX && snakeY === foodY) {
+    collectSound.play();
     snakeBody.push([foodX, foodY]);
     placeFood();
   }
@@ -97,6 +103,7 @@ const update = () => {
     snakeY < 0 ||
     snakeY > rows * blockSize
   ) {
+    deathSound.play();
     gameOver = true;
     alert("Game over!");
   }
@@ -104,6 +111,7 @@ const update = () => {
   //game over condition #2 - snake collides with its body
   for (let i = 0; i < snakeBody.length; i++) {
     if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
+      deathSound.play();
       gameOver = true;
       alert("Game over!");
     }
