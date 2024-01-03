@@ -13,3 +13,10 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.scoreboard-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,9 +1,10 @@
 //board
 const blockSize = 25;
-const rows = 20;
-const cols = 20;
+
 const board = document.getElementById("board");
 const context = board.getContext("2d");
+const rows = 20;
+const cols = 20;
 
 //snake head
 let snakeX = blockSize * 5;
@@ -18,6 +19,7 @@ let foodY;
 
 //Gameover
 let gameOver = false;
+let currentScore = 0;
 
 //audio
 
@@ -65,6 +67,7 @@ const changeDirection = (e) => {
 };
 
 const update = () => {
+  document.getElementById("current-score").innerHTML = currentScore;
   if (gameOver) return;
   context.fillStyle = "black";
   context.fillRect(0, 0, board.width, board.height);
@@ -75,6 +78,7 @@ const update = () => {
   if (snakeX === foodX && snakeY === foodY) {
     collectSound.play();
     snakeBody.push([foodX, foodY]);
+    currentScore += 1;
     placeFood();
   }
 
